@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Plus, Eye, Bell, Calendar, Search, Heart, Home, Menu } from 'lucide-react'
-import { getAvatarUrl } from '@/lib/utils'
+import { Plus, Eye, Bell, Calendar, Search, Heart, Home } from 'lucide-react'
 import { CustomerSidebar, CUSTOMER_SIDEBAR_OFFSET } from '@customer/components/CustomerSidebar'
+import { CustomerHeader } from '@customer/components/CustomerHeader'
 
 const tokens = {
   border: '#E5E7EB',
@@ -50,29 +50,11 @@ export function Dashboard() {
 
       {/* Main content - only this area scrolls */}
       <div className={`flex-1 flex flex-col min-w-0 ${CUSTOMER_SIDEBAR_OFFSET} h-screen max-h-[100dvh] overflow-hidden`}>
-        {/* Top Bar */}
-        <header className="shrink-0 z-20 bg-white border-b px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between gap-4" style={{ borderColor: tokens.border }}>
-          <div className="flex items-center gap-3">
-            <button
-              onClick={() => setSidebarOpen(true)}
-              className="lg:hidden p-2 rounded-lg hover:bg-gray-100"
-              aria-label="Open menu"
-            >
-              <Menu className="w-6 h-6" />
-            </button>
-            <div className="hidden lg:flex items-center gap-2">
-              <span className="font-semibold text-gray-800">Dashboard</span>
-            </div>
-          </div>
-          <div className="flex items-center gap-3 sm:gap-4 ml-auto">
-            <button className="relative p-2 rounded-lg hover:bg-gray-100" aria-label="Notifications">
-              <Bell className="w-5 h-5 text-gray-600" strokeWidth={1.5} />
-              <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full" />
-            </button>
-            <span className="text-sm font-normal text-gray-700 hidden sm:inline">John Doe</span>
-            <img src={getAvatarUrl('John Doe')} alt="" className="w-8 h-8 rounded-full object-cover flex-shrink-0" />
-          </div>
-        </header>
+        <CustomerHeader
+          title="Dashboard"
+          onMenuClick={() => setSidebarOpen(true)}
+          hideTitleOnMobile
+        />
 
         <main className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden p-4 sm:p-6 lg:p-8">
           <h1 className="text-xl font-bold text-gray-900 mb-6 sm:hidden">Dashboard</h1>

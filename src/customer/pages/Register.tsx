@@ -44,7 +44,7 @@ export function Register() {
             className="text-2xl sm:text-3xl md:text-4xl lg:text-[2.5rem] font-bold text-white mb-2 sm:mb-3"
             style={{ fontFamily: "'Gilroy', sans-serif" }}
           >
-            Join EstateHub Today
+            Join Estate Hub Today
           </h1>
           <p
             className="text-white/95 text-sm sm:text-base md:text-lg mb-6 sm:mb-8 lg:mb-10"

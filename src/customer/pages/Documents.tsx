@@ -1,7 +1,5 @@
 import { useState } from 'react'
 import {
-  Bell,
-  Menu,
   Upload,
   Search,
   FileStack,
@@ -12,8 +10,9 @@ import {
   Trash2,
 } from 'lucide-react'
 import { CustomerSidebar, CUSTOMER_SIDEBAR_OFFSET } from '@customer/components/CustomerSidebar'
+import { CustomerHeader } from '@customer/components/CustomerHeader'
 import { Button } from '@/components/ui/button'
-import { cn, getAvatarUrl } from '@/lib/utils'
+import { cn } from '@/lib/utils'
 
 const tokens = {
   border: '#E5E7EB',
@@ -88,29 +87,7 @@ export function Documents() {
       <div
         className={cn('flex-1 flex flex-col min-w-0', CUSTOMER_SIDEBAR_OFFSET, 'h-screen max-h-[100dvh] overflow-hidden')}
       >
-        <header
-          className="shrink-0 z-20 bg-white border-b px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between gap-4"
-          style={{ borderColor: tokens.border }}
-        >
-          <div className="flex items-center gap-3">
-            <button
-              onClick={() => setSidebarOpen(true)}
-              className="lg:hidden p-2 rounded-lg hover:bg-gray-100"
-              aria-label="Open menu"
-            >
-              <Menu className="w-6 h-6" />
-            </button>
-            <h1 className="text-lg font-bold text-gray-900">Documents</h1>
-          </div>
-          <div className="flex items-center gap-3 sm:gap-4">
-            <button className="relative p-2 rounded-lg hover:bg-gray-100" aria-label="Notifications">
-              <Bell className="w-5 h-5 text-gray-600" strokeWidth={1.5} />
-              <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full" />
-            </button>
-            <span className="text-sm font-medium text-gray-800 hidden sm:inline">John Doe</span>
-            <img src={getAvatarUrl('John Doe')} alt="" className="w-8 h-8 rounded-full object-cover flex-shrink-0" />
-          </div>
-        </header>
+        <CustomerHeader title="Documents" onMenuClick={() => setSidebarOpen(true)} />
 
         <main className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden p-4 sm:p-6 lg:p-8">
           <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-6">
