@@ -172,8 +172,8 @@ export function Alerts() {
           </div>
         </header>
 
-        <main className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden px-8 pt-6 pb-8 bg-white">
-          <div className="flex flex-wrap gap-2 mb-6">
+        <main className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6 pb-6 sm:pb-8 bg-white">
+          <div className="flex flex-wrap gap-2 mb-4 sm:mb-6">
             {FILTER_TABS.map((tab) => (
               <button
                 key={tab}

@@ -30,7 +30,7 @@ const SIDEBAR_ITEMS = [
   { label: 'Manage Profile', path: '/agent/manage-profile', icon: User },
   { label: 'Manage Listings', path: '/agent/manage-listings', icon: Home },
   { label: 'Manage Listing Requests', path: '/agent/manage-listings-request', icon: ClipboardList },
-  { label: 'Manage Calendars', path: '/agent/dashboard', icon: Calendar },
+  { label: 'Manage Calendars', path: '/agent/manage-calendars', icon: Calendar },
   { label: 'Messages', path: '/agent/messages', icon: MessageCircle },
   { label: 'Alerts', path: '/agent/alerts', icon: BellRing },
   { label: 'Settings', path: '/agent/settings', icon: Settings },

@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 import { Bell, ChevronDown, ChevronRight, Menu } from 'lucide-react'
-import { getAvatarUrl } from '@/lib/utils'
-import { AgentSidebar } from '../components/AgentSidebar'
+import { getAvatarUrl } from '../../frontend/lib/utils'
+import { BrokerSidebar } from '../components/BrokerSidebar'
 
 const tokens = {
   pageBg: '#ffffff',
@@ -139,8 +139,8 @@ function Toggle({
       onClick={() => onChange(!checked)}
       className={[
         'relative inline-flex h-6 w-11 shrink-0 rounded-full transition-colors',
-        'focus:outline-none focus:ring-2 focus:ring-[#C4955D]/40 focus:ring-offset-2',
-        checked ? 'bg-[#C4955D]' : 'bg-gray-200',
+        'focus:outline-none focus:ring-2 focus:ring-[#A49776]/40 focus:ring-offset-2',
+        checked ? 'bg-[#A49776]' : 'bg-gray-200',
       ].join(' ')}
     >
       <span
@@ -242,12 +242,12 @@ export function Settings() {
   }
 
   return (
-    <div className="h-screen max-h-[100dvh] flex overflow-hidden" style={{ backgroundColor: tokens.pageBg }}>
-      <AgentSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} activeLabel="Settings" />
+    <div className="h-screen max-h-[100dvh] flex overflow-hidden min-w-0" style={{ backgroundColor: tokens.pageBg }}>
+      <BrokerSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} activeLabel="Settings" />
 
       <div className="flex-1 flex flex-col lg:ml-64 min-w-0 w-full bg-white">
         <header className="shrink-0 bg-white border-b w-full" style={{ borderColor: tokens.cardBorder }}>
-          <div className="px-4 sm:px-8 h-[76px] flex items-center justify-between w-full max-w-none">
+          <div className="px-4 sm:px-8 min-h-[76px] py-3 sm:py-0 sm:h-[76px] flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between w-full max-w-none">
             <div className="flex items-center gap-3 min-w-0">
               <button
                 type="button"
@@ -257,7 +257,7 @@ export function Settings() {
               >
                 <Menu className="w-6 h-6 text-gray-700" />
               </button>
-              <h1 className="text-2xl font-normal text-[#0a0a0a] truncate" style={{ ...font, lineHeight: '32px' }}>
+              <h1 className="text-xl sm:text-2xl font-normal text-[#0a0a0a] truncate" style={{ ...font, lineHeight: '32px' }}>
                 Settings
               </h1>
             </div>
@@ -282,7 +282,7 @@ export function Settings() {
           </div>
         </header>
 
-        <main className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden w-full px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6 pb-6 sm:pb-8 bg-white">
+        <main className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden w-full px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6 pb-[max(1.5rem,env(safe-area-inset-bottom,0px))] sm:pb-8 bg-white">
           <div className="w-full max-w-none space-y-3">
             {SETTINGS_ITEMS.map((item) => (
               <AccordionRow

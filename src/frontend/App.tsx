@@ -19,6 +19,7 @@ import { Selling } from '@/pages/Selling'
 import { ContactUs } from '@/pages/ContactUs'
 import { CustomerRoutes } from '@customer/CustomerRoutes'
 import { AgentRoutes } from '../agent/AgentRoutes'
+import { BrokerRoutes } from '../broker/BrokerRoutes'
 
 function App() {
   return (
@@ -28,6 +29,8 @@ function App() {
         <Route path="/user/*" element={<CustomerRoutes />} />
         {/* Agent panel area */}
         <Route path="/agent/*" element={<AgentRoutes />} />
+        {/* Broker panel area */}
+        <Route path="/broker/*" element={<BrokerRoutes />} />
 
         <Route path="/" element={<Home />} />
         <Route path="/listing" element={<Listing />} />

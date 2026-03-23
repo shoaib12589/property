@@ -13,11 +13,14 @@ import { ManageListingsRequest } from './pages/ManageListingsRequest'
 import { Settings } from './pages/Settings'
 import { Alerts } from './pages/Alerts'
 import { Messages } from './pages/Messages'
+import { ManageCalendars } from './pages/ManageCalendars'
+import { ListingEvents } from './pages/ListingEvents'
+import { EventDetail } from './pages/EventDetail'
 
 export function AgentRoutes() {
   return (
     <Routes>
-      <Route path="registration" element={<Registration />} />
+      <Route path=" " element={<Registration />} />
       <Route path="login" element={<Login />} />
       <Route path="dashboard" element={<Dashboard />} />
       <Route path="active-listing" element={<ActiveListing />} />
@@ -29,6 +32,9 @@ export function AgentRoutes() {
       <Route path="settings" element={<Settings />} />
       <Route path="alerts" element={<Alerts />} />
       <Route path="messages" element={<Messages />} />
+      <Route path="manage-calendars" element={<ManageCalendars />} />
+      <Route path="listing-events" element={<ListingEvents />} />
+      <Route path="listing-events/:id" element={<EventDetail />} />
       <Route path="forgot-password" element={<ForgotPassword />} />
       <Route path="forgot-password-otp" element={<ForgotPasswordOTP />} />
       <Route path="" element={<Registration />} />

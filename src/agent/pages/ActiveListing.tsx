@@ -151,9 +151,9 @@ export function ActiveListing() {
           </div>
         </header>
 
-        <main className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden px-8 pt-6 pb-8 bg-white">
-          {/* Filter tabs: inactive = grey text only; Active selected = gold pill + white text */}
-          <div className="flex items-center gap-10 mb-6">
+        <main className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6 pb-6 sm:pb-8 bg-white">
+          {/* Filter tabs: responsive wrap */}
+          <div className="flex flex-wrap items-center gap-3 sm:gap-6 lg:gap-10 mb-4 sm:mb-6">
             {filterOrder.map((t) => {
               const selected = tab === t
                return (
@@ -161,7 +161,7 @@ export function ActiveListing() {
                   key={t}
                   type="button"
                   onClick={() => setTab(t)}
-                  className="text-base font-bold border-none cursor-pointer transition-colors"
+                  className="text-sm sm:text-base font-bold border-none cursor-pointer transition-colors whitespace-nowrap"
                   style={{
                     fontFamily: 'Arial, sans-serif',
                     ...(selected
@@ -169,13 +169,13 @@ export function ActiveListing() {
                           backgroundColor: tokens.accent,
                           color: '#ffffff',
                           borderRadius: 8,
-                          padding: '8px 24px',
+                          padding: '6px 16px',
                           border: '1px solid #ececf2',
                         }
                       : {
                           backgroundColor: 'transparent',
                           color: '#8181a5',
-                          padding: 0,
+                          padding: '6px 8px',
                         }),
                   }}
                 >
@@ -185,46 +185,48 @@ export function ActiveListing() {
             })}
           </div>
 
-          {/* Table — full width, grey header, row dividers */}
-          <div className="w-full border border-[#e5e7eb] rounded-none overflow-hidden bg-white">
-            <div className="bg-[#f9fafb] border-b border-[#e5e7eb] h-[53px] flex items-center px-8">
-              <div className="grid w-full grid-cols-[100px_1fr_1fr_1fr_160px] gap-4 items-center text-sm font-bold text-[#0a0a0a]" style={{ fontFamily: 'Arial, sans-serif' }}>
-                <span className="text-left pl-2">Image</span>
-                <span className="text-center">Listing ID</span>
-                <span className="text-center">Property Title</span>
-                <span className="text-center">Property Type</span>
-                <span className="text-right pr-2">Date Created</span>
+          {/* Table — horizontal scroll on mobile */}
+          <div className="w-full overflow-x-auto -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8">
+            <div className="min-w-[800px] border border-[#e5e7eb] rounded-none overflow-hidden bg-white">
+              <div className="bg-[#f9fafb] border-b border-[#e5e7eb] h-[53px] flex items-center px-4 sm:px-6 lg:px-8">
+                <div className="grid w-full grid-cols-[80px_1fr_1fr_1fr_140px] sm:grid-cols-[100px_1fr_1fr_1fr_160px] gap-2 sm:gap-4 items-center text-sm font-bold text-[#0a0a0a]" style={{ fontFamily: 'Arial, sans-serif' }}>
+                  <span className="text-left pl-2">Image</span>
+                  <span className="text-center">Listing ID</span>
+                  <span className="text-center">Property Title</span>
+                  <span className="text-center">Property Type</span>
+                  <span className="text-right pr-2">Date Created</span>
+                </div>
               </div>
-            </div>
 
-            <div>
-              {rows.map((r, idx) => (
-                <div
-                  key={`${r.id}-${idx}`}
-                  className="border-b border-[#e5e7eb] last:border-b-0"
-                >
-                  <div className="grid w-full grid-cols-[100px_1fr_1fr_1fr_160px] gap-4 items-center px-8 py-6">
-                    <div className="flex justify-start pl-2">
-                      <img src={r.image} alt="" className="w-[78px] h-[78px] rounded-[14px] object-cover" />
-                    </div>
-                    <div className="text-center text-sm text-[#6a7282]" style={{ fontFamily: 'Arial, sans-serif' }}>
-                      {r.id}
-                    </div>
-                    <div className="text-center text-base text-[#0a0a0a]" style={{ fontFamily: 'Arial, sans-serif' }}>
-                      {r.title}
-                    </div>
-                    <div className="text-center text-base text-[#0a0a0a]" style={{ fontFamily: 'Arial, sans-serif' }}>
-                      {r.type}
-                    </div>
-                    <div className="text-right text-base text-[#4a5565] pr-2" style={{ fontFamily: 'Arial, sans-serif' }}>
-                      {r.created}
+              <div>
+                {rows.map((r, idx) => (
+                  <div
+                    key={`${r.id}-${idx}`}
+                    className="border-b border-[#e5e7eb] last:border-b-0"
+                  >
+                    <div className="grid w-full grid-cols-[80px_1fr_1fr_1fr_140px] sm:grid-cols-[100px_1fr_1fr_1fr_160px] gap-2 sm:gap-4 items-center px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
+                      <div className="flex justify-start pl-2">
+                        <img src={r.image} alt="" className="w-[60px] h-[60px] sm:w-[78px] sm:h-[78px] rounded-[10px] sm:rounded-[14px] object-cover" />
+                      </div>
+                      <div className="text-center text-xs sm:text-sm text-[#6a7282]" style={{ fontFamily: 'Arial, sans-serif' }}>
+                        {r.id}
+                      </div>
+                      <div className="text-center text-sm sm:text-base text-[#0a0a0a]" style={{ fontFamily: 'Arial, sans-serif' }}>
+                        {r.title}
+                      </div>
+                      <div className="text-center text-sm sm:text-base text-[#0a0a0a]" style={{ fontFamily: 'Arial, sans-serif' }}>
+                        {r.type}
+                      </div>
+                      <div className="text-right text-sm sm:text-base text-[#4a5565] pr-2" style={{ fontFamily: 'Arial, sans-serif' }}>
+                        {r.created}
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
-              {rows.length === 0 && (
-                <div className="p-8 text-center text-sm text-gray-500">No listings found.</div>
-              )}
+                ))}
+                {rows.length === 0 && (
+                  <div className="p-8 text-center text-sm text-gray-500">No listings found.</div>
+                )}
+              </div>
             </div>
           </div>
         </main>

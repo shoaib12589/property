@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react'
 import {
   Archive,
   Bell,
+  ChevronLeft,
   FolderOpen,
   Mail,
   Menu,
@@ -14,13 +15,14 @@ import {
   Video,
   Reply,
 } from 'lucide-react'
-import { getAvatarUrl } from '@/lib/utils'
-import { AgentSidebar } from '../components/AgentSidebar'
+import { getAvatarUrl } from '../../frontend/lib/utils'
+import { broker } from '../brokerLayout'
+import { BrokerSidebar } from '../components/BrokerSidebar'
 
 const tokens = {
   pageBg: '#ffffff',
   cardBorder: '#E5E7EB',
-  accent: '#A3906D',
+  accent: '#A49776',
   bubbleIncoming: '#F3F4F6',
   selectedInbox: '#EFF6FF',
 } as const
@@ -50,7 +52,6 @@ type ChatMessage = {
 type RoleInboxData = {
   conversations: Omit<Conversation, 'unread'>[]
   threads: Record<string, ChatMessage[]>
-  /** initial unread counts per conversation id */
   initialUnread: Record<string, number>
 }
 
@@ -70,7 +71,7 @@ const DATA_BY_ROLE: Record<RoleTab, RoleInboxData> = {
         name: 'Mike Chen',
         time: '1 hour ago',
         preview: 'Thanks for the quick response on the...',
-        property: 'Downtown Loft',
+        property: 'Modern Downtown Condo',
         online: true,
       },
       {
@@ -245,6 +246,8 @@ function buildInitialSelectedByRole(): Record<RoleTab, string> {
 
 export function Messages() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  /** On small screens: show inbox list OR chat (split view on lg+) */
+  const [mobileChatOpen, setMobileChatOpen] = useState(false)
   const [roleTab, setRoleTab] = useState<RoleTab>('Customers')
   const [selectedByRole, setSelectedByRole] = useState<Record<RoleTab, string>>(buildInitialSelectedByRole)
   const [search, setSearch] = useState('')
@@ -284,6 +287,7 @@ export function Messages() {
 
   const selectConversation = (id: string) => {
     setSelectedByRole((prev) => ({ ...prev, [roleTab]: id }))
+    setMobileChatOpen(true)
     setUnreadByRole((prev) => {
       const map = prev[roleTab]
       if (!(id in map)) return prev
@@ -296,6 +300,7 @@ export function Messages() {
   const switchRoleTab = (tab: RoleTab) => {
     setRoleTab(tab)
     setSearch('')
+    setMobileChatOpen(false)
   }
 
   const sendMessage = () => {
@@ -318,39 +323,32 @@ export function Messages() {
   }
 
   return (
-    <div className="h-screen max-h-[100dvh] flex overflow-hidden bg-white">
-      <AgentSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} activeLabel="Messages" />
+    <div className={`${broker.shell} bg-white`}>
+      <BrokerSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} activeLabel="Messages" />
 
-      <div className="flex-1 flex flex-col lg:ml-64 min-w-0 bg-white">
+      <div className={`${broker.contentColumn} bg-white`}>
         <header className="shrink-0 bg-white border-b" style={{ borderColor: tokens.cardBorder }}>
-          <div className="px-6 lg:px-8 h-[76px] flex items-center justify-between">
+          <div className="px-4 sm:px-6 lg:px-8 min-h-[76px] py-3 sm:py-0 sm:h-[76px] flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex items-center gap-3 min-w-0">
               <button
                 type="button"
-                className="lg:hidden p-2 rounded-lg hover:bg-gray-100 shrink-0"
+                className="lg:hidden p-2 rounded-lg hover:bg-gray-100 shrink-0 min-h-[44px] min-w-[44px] flex items-center justify-center"
                 aria-label="Open menu"
                 onClick={() => setSidebarOpen(true)}
               >
                 <Menu className="w-6 h-6 text-gray-700" />
               </button>
-              <h1 className="text-2xl font-semibold text-[#0a0a0a] truncate" style={{ ...font, lineHeight: '32px' }}>
+              <h1 className={`${broker.titleSemibold} truncate`} style={{ ...font, lineHeight: '32px' }}>
                 Messages
               </h1>
             </div>
 
             <div className="flex items-center gap-0 shrink-0">
-              <button
-                type="button"
-                className="relative p-2 rounded-[10px] hover:bg-gray-50"
-                aria-label="Notifications"
-              >
+              <button type="button" className="relative p-2 rounded-[10px] hover:bg-gray-50" aria-label="Notifications">
                 <Bell className="w-6 h-6 text-gray-700" strokeWidth={1.5} />
                 <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-[#fb2c36]" />
               </button>
-              <div
-                className="flex items-center h-11 pl-4 ml-2 border-l"
-                style={{ borderColor: tokens.cardBorder }}
-              >
+              <div className="flex items-center h-11 pl-4 ml-2 border-l" style={{ borderColor: tokens.cardBorder }}>
                 <span className="text-base text-[#0a0a0a]" style={font}>
                   John Doe
                 </span>
@@ -366,7 +364,7 @@ export function Messages() {
         </header>
 
         <div className="flex-1 min-h-0 flex flex-col border-b bg-white" style={{ borderColor: tokens.cardBorder }}>
-          <div className="shrink-0 px-6 lg:px-8 pt-4 pb-3 flex flex-wrap items-center justify-between gap-3">
+          <div className="shrink-0 px-4 sm:px-6 lg:px-8 pt-4 pb-3 flex flex-wrap items-center justify-between gap-3">
             <div className="flex flex-wrap gap-2">
               {ROLE_TABS.map((tab) => (
                 <button
@@ -379,45 +377,31 @@ export function Messages() {
                       ? 'text-white border-transparent'
                       : 'bg-white text-[#6B7280] border-[#E5E7EB] hover:bg-gray-50',
                   ].join(' ')}
-                  style={
-                    roleTab === tab
-                      ? { ...font, backgroundColor: tokens.accent }
-                      : font
-                  }
+                  style={roleTab === tab ? { ...font, backgroundColor: tokens.accent } : font}
                 >
                   {tab}
                 </button>
               ))}
             </div>
             <div className="flex items-center gap-1">
-              <button
-                type="button"
-                className="p-2 rounded-lg text-[#6B7280] hover:bg-gray-100"
-                aria-label="Delete"
-              >
+              <button type="button" className="p-2 rounded-lg text-[#6B7280] hover:bg-gray-100" aria-label="Delete">
                 <Trash2 className="w-5 h-5" strokeWidth={1.5} />
               </button>
-              <button
-                type="button"
-                className="p-2 rounded-lg text-[#6B7280] hover:bg-gray-100"
-                aria-label="Archive"
-              >
+              <button type="button" className="p-2 rounded-lg text-[#6B7280] hover:bg-gray-100" aria-label="Archive">
                 <FolderOpen className="w-5 h-5" strokeWidth={1.5} />
               </button>
-              <button
-                type="button"
-                className="p-2 rounded-lg text-[#6B7280] hover:bg-gray-100"
-                aria-label="Mark as unread"
-              >
+              <button type="button" className="p-2 rounded-lg text-[#6B7280] hover:bg-gray-100" aria-label="Mark as unread">
                 <Mail className="w-5 h-5" strokeWidth={1.5} />
               </button>
             </div>
           </div>
 
-          <div className="flex-1 min-h-0 flex border-t" style={{ borderColor: tokens.cardBorder }}>
+          <div className="flex-1 min-h-0 flex flex-col lg:flex-row border-t min-h-0" style={{ borderColor: tokens.cardBorder }}>
             {/* Inbox column */}
             <div
-              className="w-full max-w-[380px] shrink-0 flex flex-col border-r bg-white min-h-0"
+              className={`w-full lg:max-w-[380px] shrink-0 flex flex-col border-r bg-white min-h-0 ${
+                mobileChatOpen ? 'hidden lg:flex' : 'flex max-h-[55vh] lg:max-h-none'
+              }`}
               style={{ borderColor: tokens.cardBorder }}
             >
               <div className="px-4 pt-4 pb-2">
@@ -431,7 +415,7 @@ export function Messages() {
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
                     placeholder="Search conversations..."
-                    className="w-full h-10 pl-10 pr-3 rounded-lg border text-sm text-[#111827] placeholder:text-[#9CA3AF] bg-white outline-none focus:ring-2 focus:ring-[#A3906D]/30"
+                    className="w-full h-10 pl-10 pr-3 rounded-lg border text-sm text-[#111827] placeholder:text-[#9CA3AF] bg-white outline-none focus:ring-2 focus:ring-[#A49776]/30"
                     style={{ borderColor: tokens.cardBorder, ...font }}
                   />
                 </div>
@@ -523,12 +507,24 @@ export function Messages() {
             </div>
 
             {/* Chat column */}
-            <div className="flex-1 flex flex-col min-w-0 min-h-0 bg-white">
+            <div
+              className={`flex-1 flex-col min-w-0 min-h-0 bg-white flex ${
+                mobileChatOpen ? 'flex' : 'hidden lg:flex'
+              }`}
+            >
               <div
-                className="shrink-0 px-6 py-4 flex items-center justify-between border-b"
+                className="shrink-0 px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between border-b gap-2"
                 style={{ borderColor: tokens.cardBorder }}
               >
-                <div className="flex items-center gap-3 min-w-0">
+                <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
+                  <button
+                    type="button"
+                    className="lg:hidden shrink-0 p-2 rounded-lg hover:bg-gray-100 min-h-[44px] min-w-[44px] flex items-center justify-center"
+                    aria-label="Back to inbox"
+                    onClick={() => setMobileChatOpen(false)}
+                  >
+                    <ChevronLeft className="w-5 h-5 text-gray-700" />
+                  </button>
                   <div className="relative shrink-0">
                     <img
                       src={getAvatarUrl(selected.name, 80)}
@@ -549,20 +545,20 @@ export function Messages() {
                     </p>
                   </div>
                 </div>
-                <div className="flex items-center gap-1 shrink-0">
-                  <button type="button" className="p-2 rounded-lg text-[#6B7280] hover:bg-gray-100" aria-label="Call">
+                <div className="flex items-center gap-0.5 sm:gap-1 shrink-0">
+                  <button type="button" className="p-2 rounded-lg text-[#6B7280] hover:bg-gray-100 min-h-[44px] min-w-[44px] flex items-center justify-center" aria-label="Call">
                     <Phone className="w-5 h-5" strokeWidth={1.5} />
                   </button>
-                  <button type="button" className="p-2 rounded-lg text-[#6B7280] hover:bg-gray-100" aria-label="Video">
+                  <button type="button" className="hidden sm:flex p-2 rounded-lg text-[#6B7280] hover:bg-gray-100 min-h-[44px] min-w-[44px] items-center justify-center" aria-label="Video">
                     <Video className="w-5 h-5" strokeWidth={1.5} />
                   </button>
-                  <button type="button" className="p-2 rounded-lg text-[#6B7280] hover:bg-gray-100" aria-label="More">
+                  <button type="button" className="p-2 rounded-lg text-[#6B7280] hover:bg-gray-100 min-h-[44px] min-w-[44px] flex items-center justify-center" aria-label="More">
                     <MoreVertical className="w-5 h-5" strokeWidth={1.5} />
                   </button>
                 </div>
               </div>
 
-              <div className="flex-1 min-h-0 overflow-y-auto px-6 py-4 space-y-4 bg-[#FAFAFA]">
+              <div className="flex-1 min-h-0 overflow-y-auto px-4 sm:px-6 py-4 space-y-4 bg-[#FAFAFA]">
                 {messages.map((m) => (
                   <div key={m.id} className={m.fromMe ? 'flex flex-col items-end' : 'flex flex-col items-start'}>
                     <div
@@ -583,12 +579,12 @@ export function Messages() {
               </div>
 
               <div
-                className="shrink-0 px-6 py-4 border-t bg-white flex items-end gap-2"
+                className="shrink-0 px-4 sm:px-6 py-3 sm:py-4 border-t bg-white flex items-end gap-2"
                 style={{ borderColor: tokens.cardBorder }}
               >
                 <button
                   type="button"
-                  className="p-2.5 rounded-lg text-[#6B7280] hover:bg-gray-100 shrink-0 mb-0.5"
+                  className="p-2.5 rounded-lg text-[#6B7280] hover:bg-gray-100 shrink-0 mb-0.5 min-h-[44px] min-w-[44px] flex items-center justify-center"
                   aria-label="Attach file"
                 >
                   <Paperclip className="w-5 h-5" strokeWidth={1.5} />
@@ -599,7 +595,7 @@ export function Messages() {
                   onChange={(e) => setDraft(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && (e.preventDefault(), sendMessage())}
                   placeholder="Type your message..."
-                  className="flex-1 min-w-0 h-11 px-4 rounded-xl border text-sm text-[#111827] placeholder:text-[#9CA3AF] outline-none focus:ring-2 focus:ring-[#A3906D]/30"
+                  className="flex-1 min-w-0 h-11 px-4 rounded-xl border text-sm text-[#111827] placeholder:text-[#9CA3AF] outline-none focus:ring-2 focus:ring-[#A49776]/30"
                   style={{ borderColor: tokens.cardBorder, ...font }}
                 />
                 <button

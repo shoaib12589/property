@@ -204,11 +204,11 @@ export function ManageListings() {
           </div>
         </header>
 
-        <main className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden px-8 pt-6 pb-8 bg-white">
-          {/* Filter row */}
-          <div className="flex items-center justify-between mb-3">
+        <main className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6 pb-6 sm:pb-8 bg-white">
+          {/* Filter row - responsive */}
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-0 mb-4 sm:mb-3">
             {/* Left side - Type filters */}
-            <div className="flex items-center gap-5">
+            <div className="flex items-center gap-2 sm:gap-5 flex-wrap">
               {FILTER_TYPES.map((t) => {
                 const selected = typeFilter === t
                 return (
@@ -216,13 +216,13 @@ export function ManageListings() {
                     key={t}
                     type="button"
                     onClick={() => setTypeFilter(t)}
-                    className="h-[36px] px-4 rounded-[10px] text-[24px] leading-none font-normal"
+                    className="h-[32px] sm:h-[36px] px-3 sm:px-4 rounded-[10px] font-normal whitespace-nowrap"
                     style={{
                       backgroundColor: selected ? tokens.accent : 'transparent',
                       color: selected ? '#ffffff' : '#4B5563',
                       border: 'none',
                       fontFamily: 'Arial, sans-serif',
-                      fontSize: '14px',
+                      fontSize: '13px',
                     }}
                   >
                     {t}
@@ -232,19 +232,19 @@ export function ManageListings() {
             </div>
 
             {/* Right side - Dropdown filters */}
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 flex-wrap">
               {/* Filter dropdown */}
               <div 
-                className="flex items-center gap-2 border border-[#D1D5DB] rounded-xl h-10 px-3 bg-white"
-                style={{ minWidth: '142px' }}
+                className="flex items-center gap-2 border border-[#D1D5DB] rounded-xl h-9 sm:h-10 px-3 bg-white flex-1 sm:flex-none"
+                style={{ minWidth: '120px', maxWidth: '160px' }}
               >
-                <span className="w-5 h-5 rounded-full bg-[#F3F4F6] text-gray-400 flex items-center justify-center">
+                <span className="w-5 h-5 rounded-full bg-[#F3F4F6] text-gray-400 flex items-center justify-center shrink-0">
                   <Filter className="w-3.5 h-3.5" />
                 </span>
                 <select
                   value={filterValue}
                   onChange={(e) => setFilterValue(e.target.value)}
-                  className="bg-transparent outline-none text-[13px] text-gray-600 cursor-pointer appearance-none flex-1"
+                  className="bg-transparent outline-none text-[12px] sm:text-[13px] text-gray-600 cursor-pointer appearance-none flex-1"
                   style={{ fontFamily: 'Arial, sans-serif' }}
                 >
                   <option value="" disabled>
@@ -259,13 +259,13 @@ export function ManageListings() {
 
               {/* Listing Status dropdown */}
               <div 
-                className="flex items-center gap-2 border border-[#D1D5DB] rounded-xl h-10 px-3 bg-white"
-                style={{ minWidth: '170px' }}
+                className="flex items-center gap-2 border border-[#D1D5DB] rounded-xl h-9 sm:h-10 px-3 bg-white flex-1 sm:flex-none"
+                style={{ minWidth: '140px', maxWidth: '180px' }}
               >
                 <select
                   value={listingStatusValue}
                   onChange={(e) => setListingStatusValue(e.target.value)}
-                  className="bg-transparent outline-none text-[13px] text-gray-600 cursor-pointer appearance-none flex-1"
+                  className="bg-transparent outline-none text-[12px] sm:text-[13px] text-gray-600 cursor-pointer appearance-none flex-1"
                   style={{ fontFamily: 'Arial, sans-serif' }}
                 >
                   <option value="" disabled>
@@ -282,82 +282,84 @@ export function ManageListings() {
             </div>
           </div>
 
-          {/* Table */}
-          <div>
-            {/* Table Header */}
-            <div
-              className="grid items-center border-b border-[#E5E7EB] bg-white"
-              style={{ gridTemplateColumns: '95px 115px 1fr 130px 120px 135px 150px' }}
-            >
-              <div className="py-3 pl-3 text-[12px] font-bold text-[#111827]" style={{ fontFamily: 'Arial, sans-serif' }}>Image</div>
-              <div className="py-3 text-[12px] font-bold text-[#111827] text-center" style={{ fontFamily: 'Arial, sans-serif' }}>Listing ID</div>
-              <div className="py-3 text-[12px] font-bold text-[#111827] text-center" style={{ fontFamily: 'Arial, sans-serif' }}>Property Title</div>
-              <div className="py-3 text-[12px] font-bold text-[#111827] text-center" style={{ fontFamily: 'Arial, sans-serif' }}>Property Type</div>
-              <div className="py-3 text-[12px] font-bold text-[#111827] text-center" style={{ fontFamily: 'Arial, sans-serif' }}>Status</div>
-              <div className="py-3 text-[12px] font-bold text-[#111827] text-center" style={{ fontFamily: 'Arial, sans-serif' }}>Date Created</div>
-              <div className="py-3 pr-4 text-[12px] font-bold text-[#111827] text-center" style={{ fontFamily: 'Arial, sans-serif' }}>Actions</div>
-            </div>
+          {/* Table - horizontal scroll on mobile */}
+          <div className="overflow-x-auto -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8">
+            <div className="min-w-[900px]">
+              {/* Table Header */}
+              <div
+                className="grid items-center border-b border-[#E5E7EB] bg-white"
+                style={{ gridTemplateColumns: '80px 100px 1fr 110px 100px 120px 140px' }}
+              >
+                <div className="py-3 pl-3 text-[11px] sm:text-[12px] font-bold text-[#111827]" style={{ fontFamily: 'Arial, sans-serif' }}>Image</div>
+                <div className="py-3 text-[11px] sm:text-[12px] font-bold text-[#111827] text-center" style={{ fontFamily: 'Arial, sans-serif' }}>Listing ID</div>
+                <div className="py-3 text-[11px] sm:text-[12px] font-bold text-[#111827] text-center" style={{ fontFamily: 'Arial, sans-serif' }}>Property Title</div>
+                <div className="py-3 text-[11px] sm:text-[12px] font-bold text-[#111827] text-center" style={{ fontFamily: 'Arial, sans-serif' }}>Type</div>
+                <div className="py-3 text-[11px] sm:text-[12px] font-bold text-[#111827] text-center" style={{ fontFamily: 'Arial, sans-serif' }}>Status</div>
+                <div className="py-3 text-[11px] sm:text-[12px] font-bold text-[#111827] text-center" style={{ fontFamily: 'Arial, sans-serif' }}>Date Created</div>
+                <div className="py-3 pr-4 text-[11px] sm:text-[12px] font-bold text-[#111827] text-center" style={{ fontFamily: 'Arial, sans-serif' }}>Actions</div>
+              </div>
 
-            {/* Table Body */}
-            <div className="divide-y divide-[#E5E7EB]">
-              {rows.map((r, idx) => {
-                return (
-                  <div
-                    key={`${r.listingId}-${idx}`}
-                    className="grid items-center bg-white hover:bg-gray-50"
-                    style={{ gridTemplateColumns: '95px 115px 1fr 130px 120px 135px 150px' }}
-                  >
-                    <div className="pl-3 py-4 flex items-center">
-                      <img 
-                        src={r.image} 
-                        alt="" 
-                        className="w-[100px] h-[70px] rounded-lg object-cover" 
-                      />
-                    </div>
-                    <div 
-                      className="py-4 text-[12px] text-[#6B7280] text-center"
-                      style={{ fontFamily: 'Arial, sans-serif' }}
+              {/* Table Body */}
+              <div className="divide-y divide-[#E5E7EB]">
+                {rows.map((r, idx) => {
+                  return (
+                    <div
+                      key={`${r.listingId}-${idx}`}
+                      className="grid items-center bg-white hover:bg-gray-50"
+                      style={{ gridTemplateColumns: '80px 100px 1fr 110px 100px 120px 140px' }}
                     >
-                      {r.listingId}
+                      <div className="pl-3 py-3 sm:py-4 flex items-center">
+                        <img 
+                          src={r.image} 
+                          alt="" 
+                          className="w-[70px] h-[50px] sm:w-[80px] sm:h-[55px] rounded-lg object-cover" 
+                        />
+                      </div>
+                      <div 
+                        className="py-3 sm:py-4 text-[11px] sm:text-[12px] text-[#6B7280] text-center"
+                        style={{ fontFamily: 'Arial, sans-serif' }}
+                      >
+                        {r.listingId}
+                      </div>
+                      <div 
+                        className="py-3 sm:py-4 text-[13px] sm:text-[14px] font-bold text-[#111827] text-center px-1"
+                        style={{ fontFamily: 'Arial, sans-serif' }}
+                      >
+                        {r.title}
+                      </div>
+                      <div 
+                        className="py-3 sm:py-4 text-[13px] sm:text-[14px] font-bold text-[#6B7280] text-center"
+                        style={{ fontFamily: 'Arial, sans-serif' }}
+                      >
+                        {r.type}
+                      </div>
+                      <div className="py-3 sm:py-4 flex items-center justify-center">
+                        <StatusBadge status={r.status} />
+                      </div>
+                      <div 
+                        className="py-3 sm:py-4 text-[11px] sm:text-[12px] text-[#6B7280] text-center"
+                        style={{ fontFamily: 'Arial, sans-serif' }}
+                      >
+                        {r.created}
+                      </div>
+                      <div className="py-3 sm:py-4 pr-4 flex items-center justify-center gap-1.5">
+                        <IconAction title="View" onClick={() => navigate(`/agent/manage-listings/${r.listingId}`)}>
+                          <Eye className="w-3.5 h-3.5" />
+                        </IconAction>
+                        <IconAction title="Edit" onClick={() => navigate(`/agent/manage-listings/${r.listingId}/edit`)}>
+                          <Pencil className="w-3.5 h-3.5" />
+                        </IconAction>
+                        <IconAction title="Delete">
+                          <X className="w-3.5 h-3.5" />
+                        </IconAction>
+                        <IconAction title="Refresh">
+                          <RefreshCw className="w-3.5 h-3.5" />
+                        </IconAction>
+                      </div>
                     </div>
-                    <div 
-                      className="py-4 text-[15px] font-bold text-[#111827] text-center"
-                      style={{ fontFamily: 'Arial, sans-serif' }}
-                    >
-                      {r.title}
-                    </div>
-                    <div 
-                      className="py-4 text-[15px] font-bold text-[#6B7280] text-center"
-                      style={{ fontFamily: 'Arial, sans-serif' }}
-                    >
-                      {r.type}
-                    </div>
-                    <div className="py-4 flex items-center justify-center">
-                      <StatusBadge status={r.status} />
-                    </div>
-                    <div 
-                      className="py-4 text-[12px] text-[#6B7280] text-center"
-                      style={{ fontFamily: 'Arial, sans-serif' }}
-                    >
-                      {r.created}
-                    </div>
-                    <div className="py-4 pr-4 flex items-center justify-center gap-2">
-                      <IconAction title="View" onClick={() => navigate(`/agent/manage-listings/${r.listingId}`)}>
-                        <Eye className="w-4 h-4" />
-                      </IconAction>
-                      <IconAction title="Edit" onClick={() => navigate(`/agent/manage-listings/${r.listingId}/edit`)}>
-                        <Pencil className="w-4 h-4" />
-                      </IconAction>
-                      <IconAction title="Delete">
-                        <X className="w-4 h-4" />
-                      </IconAction>
-                      <IconAction title="Refresh">
-                        <RefreshCw className="w-4 h-4" />
-                      </IconAction>
-                    </div>
-                  </div>
-                )
-              })}
+                  )
+                })}
+              </div>
             </div>
           </div>
         </main>
