@@ -13,12 +13,12 @@ const summaryStats = [
   { label: 'Total Revenue', sub: null, value: '$123,083', href: '/admin/revenue-management' },
 ] as const
 
-const userStats = [
+const userStats: { label: string; value: string; highlight?: boolean }[] = [
   { label: 'Brokers', value: '58' },
   { label: 'Agent', value: '182' },
   { label: 'Clients', value: '940' },
   { label: 'Visitors Today', value: '1,230', highlight: true },
-] as const
+]
 
 const usersRows = [
   {

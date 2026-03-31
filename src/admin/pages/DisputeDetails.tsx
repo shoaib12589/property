@@ -16,6 +16,7 @@ type Resolution = 'approve' | 'reject' | 'request'
 export function DisputeDetails() {
   const { transactionId } = useParams<{ transactionId: string }>()
   const navigate = useNavigate()
+  const disputeSlug = transactionId ?? '2455679'
   const displayId = '#3048'
 
   const [adminNotes, setAdminNotes] = useState('')
