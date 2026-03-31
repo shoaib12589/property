@@ -13,6 +13,7 @@ export default defineConfig({
     alias: {
       '@': path.resolve(__dirname, 'src/frontend'),
       '@customer': path.resolve(__dirname, 'src/customer'),
+      '@admin': path.resolve(__dirname, 'src/admin'),
     },
   },
   build: {

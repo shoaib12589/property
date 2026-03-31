@@ -28,8 +28,9 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/frontend/*"],
-      "@customer/*": ["./src/customer/*"]
+      "@customer/*": ["./src/customer/*"],
+      "@admin/*": ["./src/admin/*"]
     }
   },
-  "include": ["src/frontend", "src/customer", "src/main.tsx"]
+  "include": ["src/frontend", "src/customer", "src/admin", "src/main.tsx"]
 }

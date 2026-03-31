@@ -20,11 +20,14 @@ import { ContactUs } from '@/pages/ContactUs'
 import { CustomerRoutes } from '@customer/CustomerRoutes'
 import { AgentRoutes } from '../agent/AgentRoutes'
 import { BrokerRoutes } from '../broker/BrokerRoutes'
+import { AdminRoutes } from '../admin/AdminRoutes'
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
+        {/* Admin panel */}
+        <Route path="/admin/*" element={<AdminRoutes />} />
         {/* Customer area: all pages in src/customer/, URLs: /user/login, /user/register, etc. */}
         <Route path="/user/*" element={<CustomerRoutes />} />
         {/* Agent panel area */}
