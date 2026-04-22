@@ -13,10 +13,32 @@ import { ProcessRefund } from './pages/ProcessRefund'
 import { DisputeDetails } from './pages/DisputeDetails'
 import { DisputeExtended } from './pages/DisputeExtended'
 import { RevenueManagement } from './pages/RevenueManagement'
+import { RevenueDetails } from './pages/RevenueDetails'
+import { RevenueDetailRecord } from './pages/RevenueDetailRecord'
+import { RevenueReports } from './pages/RevenueReports'
+import { ReportsAnalytics } from './pages/ReportsAnalytics'
+import { ContentManagement } from './pages/ContentManagement'
+import { SystemManagement } from './pages/SystemManagement'
+import { PartnersDonations } from './pages/PartnersDonations'
+import { RegistrationEnrollment } from './pages/RegistrationEnrollment'
+import { UserManagement } from './pages/UserManagement'
+import { Settings } from './pages/Settings'
+import { Messages } from './pages/Messages'
 
 export function AdminRoutes() {
   const dashboardSlugs = ADMIN_NAV_SLUGS.filter(
-    ({ slug }) => slug !== 'listings-management' && slug !== 'transactions' && slug !== 'revenue-management'
+    ({ slug }) =>
+      slug !== 'listings-management' &&
+      slug !== 'transactions' &&
+      slug !== 'revenue-management' &&
+      slug !== 'reports-analytics' &&
+      slug !== 'content-management' &&
+      slug !== 'system-management' &&
+      slug !== 'partnerships-donations' &&
+      slug !== 'registration-enrollment' &&
+      slug !== 'user-management' &&
+      slug !== 'settings' &&
+      slug !== 'messages'
   )
 
   return (
@@ -33,7 +55,18 @@ export function AdminRoutes() {
       <Route path="transactions/:transactionId/refund" element={<ProcessRefund />} />
       <Route path="transactions/:transactionId" element={<TransactionDetail />} />
       <Route path="transactions" element={<Transactions />} />
+      <Route path="revenue-management/details/:revenueId" element={<RevenueDetailRecord />} />
+      <Route path="revenue-management/details" element={<RevenueDetails />} />
+      <Route path="revenue-management/reports" element={<RevenueReports />} />
       <Route path="revenue-management" element={<RevenueManagement />} />
+      <Route path="reports-analytics" element={<ReportsAnalytics />} />
+      <Route path="content-management" element={<ContentManagement />} />
+      <Route path="system-management" element={<SystemManagement />} />
+      <Route path="partnerships-donations" element={<PartnersDonations />} />
+      <Route path="registration-enrollment" element={<RegistrationEnrollment />} />
+      <Route path="user-management" element={<UserManagement />} />
+      <Route path="settings" element={<Settings />} />
+      <Route path="messages" element={<Messages />} />
       {dashboardSlugs.map(({ slug }) => (
         <Route key={slug} path={slug} element={<Dashboard />} />
       ))}

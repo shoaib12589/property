@@ -8,9 +8,24 @@ type AdminSuccessModalProps = {
   onClose: () => void
   /** @default OK */
   buttonLabel?: string
+  /** Hide footer action button for auto-dismiss usage */
+  hideButton?: boolean
+  /** Optional auto close timeout in milliseconds */
+  autoCloseMs?: number
+  /** Wider card + larger title (CMS / System Management Figma) */
+  variant?: 'default' | 'prominent'
 }
 
-export function AdminSuccessModal({ open, title, subtitle, onClose, buttonLabel = 'OK' }: AdminSuccessModalProps) {
+export function AdminSuccessModal({
+  open,
+  title,
+  subtitle,
+  onClose,
+  buttonLabel = 'OK',
+  hideButton = false,
+  autoCloseMs,
+  variant = 'default',
+}: AdminSuccessModalProps) {
   useEffect(() => {
     if (!open) return
     function onKey(e: KeyboardEvent) {
@@ -19,6 +34,12 @@ export function AdminSuccessModal({ open, title, subtitle, onClose, buttonLabel 
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
   }, [open, onClose])
+
+  useEffect(() => {
+    if (!open || !autoCloseMs) return
+    const id = window.setTimeout(onClose, autoCloseMs)
+    return () => window.clearTimeout(id)
+  }, [open, autoCloseMs, onClose])
 
   if (!open) return null
 
@@ -31,23 +52,30 @@ export function AdminSuccessModal({ open, title, subtitle, onClose, buttonLabel 
       onClick={onClose}
     >
       <div
-        className="w-full max-w-[380px] rounded-2xl bg-[#B89F7C] px-8 py-10 text-center text-white shadow-2xl"
+        className={`rounded-2xl bg-[#B89F7C] text-center text-white shadow-2xl ${
+          variant === 'prominent' ? 'w-full max-w-[440px] px-10 py-11' : 'w-full max-w-[380px] px-8 py-10'
+        }`}
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="mx-auto mb-5 flex justify-center text-white">
-          <SuccessBadgeIcon className="h-[65px] w-[65px] shrink-0" />
+        <div className={`mx-auto flex justify-center text-white ${variant === 'prominent' ? 'mb-6' : 'mb-5'}`}>
+          <SuccessBadgeIcon className={`shrink-0 text-white ${variant === 'prominent' ? 'h-[72px] w-[72px]' : 'h-[65px] w-[65px]'}`} />
         </div>
-        <p id="admin-success-title" className="text-[22px] font-bold tracking-tight">
+        <p
+          id="admin-success-title"
+          className={variant === 'prominent' ? 'text-[26px] font-bold leading-tight tracking-tight' : 'text-[22px] font-bold tracking-tight'}
+        >
           {title}
         </p>
-        <p className="mt-2 text-[15px] font-normal text-white/95">{subtitle}</p>
-        <button
-          type="button"
-          className="mt-8 w-full rounded-lg bg-white py-2.5 text-[14px] font-semibold text-[#B89F7C] transition hover:bg-white/95"
-          onClick={onClose}
-        >
-          {buttonLabel}
-        </button>
+        <p className={`font-normal text-white/95 ${variant === 'prominent' ? 'mt-3 text-[16px] leading-snug' : 'mt-2 text-[15px]'}`}>{subtitle}</p>
+        {!hideButton ? (
+          <button
+            type="button"
+            className="mt-8 w-full rounded-lg bg-white py-2.5 text-[14px] font-semibold text-[#B89F7C] transition hover:bg-white/95"
+            onClick={onClose}
+          >
+            {buttonLabel}
+          </button>
+        ) : null}
       </div>
     </div>
   )

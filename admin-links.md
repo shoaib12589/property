@@ -17,10 +17,10 @@ https://property-blond-eta.vercel.app/admin
 ## Auth & onboarding
 
 ```
-/admin/login
-/admin/registration
-/admin/forgot-password
-/admin/otp-verification
+https://property-blond-eta.vercel.app/admin/login
+https://property-blond-eta.vercel.app/admin/registration
+https://property-blond-eta.vercel.app/admin/forgot-password
+https://property-blond-eta.vercel.app/admin/otp-verification
 ```
 
 ## Dashboard shell (placeholder pages)
@@ -28,39 +28,84 @@ https://property-blond-eta.vercel.app/admin
 These render the main **Dashboard** layout until a dedicated page exists:
 
 ```
-/admin/dashboard
-/admin/reports-analytics
-/admin/content-management
-/admin/system-management
-/admin/partnerships-donations
-/admin/charts-insights
-/admin/messages
-/admin/registration-enrollment
-/admin/settings
+https://property-blond-eta.vercel.app/admin/dashboard
+```
+
+## Messages
+
+```
+https://property-blond-eta.vercel.app/admin/messages
+```
+
+## Settings
+
+```
+https://property-blond-eta.vercel.app/admin/settings
+```
+
+## User Management
+
+```
+https://property-blond-eta.vercel.app/admin/user-management
+```
+
+## Reports & Analytics
+
+```
+https://property-blond-eta.vercel.app/admin/reports-analytics
+```
+
+## Content Management (CMS)
+
+```
+https://property-blond-eta.vercel.app/admin/content-management
+```
+
+## System Management
+
+```
+https://property-blond-eta.vercel.app/admin/system-management
+```
+
+## Partners & Donations
+
+In-app title **Partners & Donations**; URL slug remains `partnerships-donations`.
+
+```
+https://property-blond-eta.vercel.app/admin/partnerships-donations
+```
+
+## Registration & Enrollment
+
+```
+https://property-blond-eta.vercel.app/admin/registration-enrollment
 ```
 
 ## Listings Management
 
 ```
-/admin/listings-management
-/admin/listings-management/property/:listingId
-/admin/listings-management/property/:listingId/edit
+https://property-blond-eta.vercel.app/admin/listings-management
+https://property-blond-eta.vercel.app/admin/listings-management/property/:listingId
+https://property-blond-eta.vercel.app/admin/listings-management/property/:listingId/edit
 ```
 
 ## Transactions
 
 ```
-/admin/transactions
-/admin/transactions/:transactionId
-/admin/transactions/:transactionId/refund
-/admin/transactions/dispute/:transactionId
-/admin/transactions/dispute/:transactionId/extended
+https://property-blond-eta.vercel.app/admin/transactions
+https://property-blond-eta.vercel.app/admin/transactions/:transactionId
+https://property-blond-eta.vercel.app/admin/transactions/:transactionId/refund
+https://property-blond-eta.vercel.app/admin/transactions/dispute/:transactionId
+https://property-blond-eta.vercel.app/admin/transactions/dispute/:transactionId/extended
 ```
 
 ## Revenue Management
 
 ```
-/admin/revenue-management
+https://property-blond-eta.vercel.app/admin/revenue-management
+https://property-blond-eta.vercel.app/admin/revenue-management/reports
+https://property-blond-eta.vercel.app/admin/revenue-management/details
+https://property-blond-eta.vercel.app/admin/revenue-management/details/:revenueId
 ```
 
 ---
