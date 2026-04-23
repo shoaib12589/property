@@ -45,3 +45,8 @@ export const CURRENCY_OPTIONS = [
 ] as const
 
 export const FREQUENCY_OPTIONS = ['Instant', 'Daily', 'Weekly'] as const
+
+export const LISTING_APPROVED_DEFAULT = {
+  subject: 'Good News: Your Listing is Now Live',
+  body: `Dear {owner_name}, we are pleased to inform you that your listing {property_title} has been approved and is now live on The Curated Estate portal.`,
+}
