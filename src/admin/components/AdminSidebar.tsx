@@ -10,6 +10,7 @@ import {
   Server,
   HeartHandshake,
   MessageCircle,
+  Mail,
   Users,
   UserPlus,
   Settings,
@@ -29,6 +30,7 @@ export const ADMIN_NAV_SLUGS = [
   { label: 'Partners & Donations', slug: 'partnerships-donations', icon: HeartHandshake },
   { label: 'Registration & Enrollment', slug: 'registration-enrollment', icon: UserPlus },
   { label: 'Messages', slug: 'messages', icon: MessageCircle },
+  { label: 'Newsletters', slug: 'newsletters', icon: Mail },
   { label: 'Settings', slug: 'settings', icon: Settings },
 ] as const
 

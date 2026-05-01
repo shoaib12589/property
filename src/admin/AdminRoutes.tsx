@@ -24,6 +24,7 @@ import { RegistrationEnrollment } from './pages/RegistrationEnrollment'
 import { UserManagement } from './pages/UserManagement'
 import { Settings } from './pages/Settings'
 import { Messages } from './pages/Messages'
+import { Newsletters } from './pages/Newsletters'
 
 export function AdminRoutes() {
   const dashboardSlugs = ADMIN_NAV_SLUGS.filter(
@@ -67,6 +68,7 @@ export function AdminRoutes() {
       <Route path="user-management" element={<UserManagement />} />
       <Route path="settings" element={<Settings />} />
       <Route path="messages" element={<Messages />} />
+      <Route path="newsletters" element={<Newsletters />} />
       {dashboardSlugs.map(({ slug }) => (
         <Route key={slug} path={slug} element={<Dashboard />} />
       ))}
